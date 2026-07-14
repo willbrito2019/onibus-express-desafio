@@ -1,6 +1,6 @@
 ﻿using OnibusExpress.Domain.Entities;
 
-namespace OnibusExpress.Application.Interfaces;
+namespace OnibusExpress.Domain.Interfaces;
 
 public interface IReservaRepository
 {

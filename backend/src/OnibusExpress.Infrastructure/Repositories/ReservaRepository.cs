@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OnibusExpress.Application.Interfaces;
+using OnibusExpress.Domain.Interfaces;
 using OnibusExpress.Domain.Entities;
 using OnibusExpress.Infrastructure.Persistence;
 using System;
