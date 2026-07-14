@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: onibusexpress-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: onibusexpress
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: src/OnibusExpress.Api/Dockerfile
+    container_name: onibusexpress-api
+    ports:
+      - "5000:8080"
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=onibusexpress;Username=postgres;Password=postgres
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
