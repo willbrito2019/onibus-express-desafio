@@ -110,6 +110,14 @@ code {
   background: var(--code-bg);
 }
 
-button, input {
+input, select {
   color: #000;
+  background-color: #fff;
+  border: 1px solid #999;
+  padding: 4px 8px;
+}
+
+button {
+  color: #000;
+  cursor: pointer;
 }

@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useState, useEffect, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useReservaStore } from '../store/reservaStore';
 import { criarReserva } from '../services/reservaService';
@@ -18,10 +18,13 @@ export default function ConfirmacaoReserva() {
   const [erroApi, setErroApi] = useState('');
   const [codigoReserva, setCodigoReserva] = useState<string | null>(null);
 
-  if (!viagem || assento === null) {
-    navigate('/');
-    return null;
-  }
+  useEffect(() => {
+    if (!viagem && !codigoReserva) {
+      navigate('/');
+    }
+  }, [viagem, codigoReserva, navigate]);
+
+  if (!viagem && !codigoReserva) return null;
 
   function validar(): boolean {
     const novosErros: Record<string, string> = {};
@@ -83,10 +86,10 @@ export default function ConfirmacaoReserva() {
 
       <div style={{ marginBottom: 16, padding: 12, background: '#f5f5f5' }}>
         <strong>Resumo da compra</strong>
-        <div>{viagem.origem} → {viagem.destino}</div>
-        <div>{new Date(viagem.dataHoraPartida).toLocaleString('pt-BR')}</div>
+        <div>{viagem!.origem} → {viagem!.destino}</div>
+        <div>{new Date(viagem!.dataHoraPartida).toLocaleString('pt-BR')}</div>
         <div>Assento: {assento}</div>
-        <div>R$ {viagem.precoBase.toFixed(2)}</div>
+        <div>R$ {viagem!.precoBase.toFixed(2)}</div>
       </div>
 
       <form onSubmit={handleConfirmar} data-testid="form-passageiro">

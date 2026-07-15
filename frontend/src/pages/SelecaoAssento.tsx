@@ -49,7 +49,9 @@ export default function SelecaoAssento() {
               onClick={() => handleSelecionarAssento(numero)}
               style={{
                 padding: 8,
-                background: status === 'ocupado' ? '#ccc' : status === 'selecionado' ? '#4caf50' : '#fff',
+                background: status === 'ocupado' ? '#e53935' : status === 'selecionado' ? '#4caf50' : '#fff',
+                color: status === 'ocupado' ? '#fff' : '#000',
+                fontWeight: 600,
                 cursor: status === 'ocupado' ? 'not-allowed' : 'pointer',
                 border: '1px solid #999',
               }}
