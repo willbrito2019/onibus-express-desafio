@@ -13,8 +13,8 @@ Sistema de busca e reserva de passagens de ônibus, desafio técnico da OniBus E
 
 Clean Architecture com 4 camadas:
 
-- **Domain**: entidades (`Rota`, `Viagem`, `Passageiro`, `Reserva`) e regras de negócio invariantes (ex: cancelamento só até 2h antes da partida). Sem dependência de nenhuma outra camada.
-- **Application**: casos de uso auxiliares que não são invariantes de entidade — `CpfValidator` (validação de dígito verificador) e `GeradorCodigoReserva`.
+- **Domain**: entidades (`Rota`, `Viagem`, `Passageiro`, `Reserva`) e regras de negócio (ex: cancelamento só até 2h antes da partida). 
+- **Application**: casos de uso auxiliares e `CpfValidator` (validação de dígito verificador) e `GeradorCodigoReserva`.
 - **Infrastructure**: `AppDbContext` (EF Core), repositórios (implementação das interfaces definidas no Domain).
 - **Api**: Controllers, DTOs, configuração de DI, CORS.
 
@@ -28,11 +28,11 @@ Clean Architecture com 4 camadas:
 ## Decisões técnicas
 
 - **PostgreSQL em vez de SQL Server**: imagem menor, sobe mais rápido em Docker, evita questões de licença/EULA em container.
-- **SQLite para testes de integração** (não usado ainda neste MVP — testes atuais são unitários).
-- **Optei por Controllers chamando repositórios diretamente.**
+- **SQLite para testes de integração** (não usado — testes atuais são unitários).
+- **Optei por Controllers chamando repositórios diretamente (devido ao pouco tempo para entregar o projeto).**
 - **CPF armazenado sem máscara**: normalizado (somente dígitos) antes de persistir, evitando duplicidade de passageiro por formatações diferentes do mesmo CPF.
 - **Geração de código de reserva em 2 camadas**: o `GeradorCodigoReserva` tenta gerar e verifica existência (retry até 10x); o índice único no banco (`CodigoReserva`) é a garantia final contra colisões.
-- **Campo Data de Nascimento no frontend**: o desafio pede Nome/CPF/E-mail na Tela 3, mas o backend exige `dataNascimento` para criar o `Passageiro`. Adicionei o campo ao formulário para fechar a integração ponta a ponta.
+- **Campo Data de Nascimento no frontend**: na Tela de Dados do Passageiro, não cita a data de nascimento, mas o backend exige `dataNascimento` para criar o `Passageiro`. Adicionei o campo ao formulário para fechar a integração ponta a ponta.
 - **Zustand em vez de Context API**: solução mais simples para compartilhar estado entre as telas.
 
 ## Como rodar
@@ -53,6 +53,7 @@ Isso sobe o banco (PostgreSQL), a API e o frontend juntos. As migrations e o see
 #### 1. Subir apenas o banco
 
 ```bash
+cd backend
 docker-compose up -d db
 ```
 
