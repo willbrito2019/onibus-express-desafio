@@ -61,7 +61,8 @@ Swagger disponível em `http://localhost:5064/swagger` (a porta pode variar, ver
 dotnet test
 \`\`\`
 
-Cobertura: validação de CPF, regra de assento já ocupado, regra de cancelamento (incluindo edge case do limite exato de 2h), geração de código único.
+Cobertura: validação de CPF, regra de assento já ocupado, regra de cancelamento (incluindo edge case do limite exato de 2h), 
+geração de código único.
 
 ## Endpoints
 
