@@ -40,6 +40,7 @@ Clean Architecture com 4 camadas:
 ### Opção A — Docker (recomendado)
 
 ```bash
+cd backend
 docker-compose up --build
 ```
 
